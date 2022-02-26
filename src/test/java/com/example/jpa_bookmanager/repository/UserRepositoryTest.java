@@ -59,6 +59,7 @@ class UserRepositoryTest {
     //자세한 부분은 @JpaRepository 클래스에서 확인하면 된다.
 
     // springboot 2.5 ver 가 되면서 application-test에 설정을 변경해주어야 했다.
+    // https://wenodev.tistory.com/25 참고
 
     // getby -> entity를 받아오고 findby는 optional 객체를 받아옴 따라서 getone으로 불러오기 위해서 세션을 유지해야하는데
     // @Transactional 을 추가해 줘야한다.

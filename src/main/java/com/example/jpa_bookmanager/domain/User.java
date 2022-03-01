@@ -1,20 +1,25 @@
 package com.example.jpa_bookmanager.domain;
 
-import com.sun.istack.NotNull;
+import com.example.jpa_bookmanager.domain.listener.Auditable;
+import com.example.jpa_bookmanager.domain.listener.UserHistoryListener;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
 @Entity
-@EntityListeners(value = {MyEntityListener.class, UserHistoryListener.class})
-public class User implements Auditable{
+@EntityListeners(value = { UserHistoryListener.class})
+public class User extends BaseEntity implements Auditable {
     @Id
     @GeneratedValue
     private Long id;
@@ -25,10 +30,11 @@ public class User implements Auditable{
     @NonNull
     private String email;
 
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
+//    @CreatedDate
+//    private LocalDateTime createdAt;
+//
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;

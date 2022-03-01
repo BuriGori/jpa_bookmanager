@@ -1,6 +1,4 @@
-package com.example.jpa_bookmanager.domain;
-
-import org.apache.tomcat.jni.Local;
+package com.example.jpa_bookmanager.domain.listener;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;

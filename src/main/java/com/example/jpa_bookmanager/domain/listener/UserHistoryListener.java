@@ -1,5 +1,7 @@
-package com.example.jpa_bookmanager.domain;
+package com.example.jpa_bookmanager.domain.listener;
 
+import com.example.jpa_bookmanager.domain.User;
+import com.example.jpa_bookmanager.domain.UserHistory;
 import com.example.jpa_bookmanager.repository.UserHistoryRepository;
 import com.example.jpa_bookmanager.support.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

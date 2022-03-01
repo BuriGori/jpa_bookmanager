@@ -1,17 +1,17 @@
 package com.example.jpa_bookmanager.repository;
 
+import com.example.jpa_bookmanager.domain.Gender;
 import com.example.jpa_bookmanager.domain.User;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.comparator.JSONCompareUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,6 +23,8 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
     @Test
     void crud() throws Exception{
         List<User> users = userRepository.findAll();
@@ -74,4 +76,61 @@ class UserRepositoryTest {
     // deleteAll()을 사용하면 select를 통한 id들을 하나씩 delete문을 실행함
     // deleteInBatch를 사용하면 or 연산을 통해서 하나의 delete문이 실행
     // Batch를 사용하면 확인 작업을 거치지 않고 바로 kill
+
+
+
+
+    @Test
+    void select(){
+        System.out.println("findByName : " + userRepository.findByName("martin"));
+        System.out.println("findFirst1ByName : " + userRepository.findFirst1ByName("martin"));
+        System.out.println("findTop2ByName : " + userRepository.findTop2ByName("martin"));
+        System.out.println("findByCreateAtAfter : " + userRepository.findByCreatedAtAfter(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByIdIsNotNull : " + userRepository.findByIdIsNotNull());
+//        System.out.println("findByAddressIsNotEmpty : " + userRepository.findByAddressIsNotEmpty());
+        System.out.println("findByNameIn : "+ userRepository.findByNameIn(Lists.newArrayList("martin","denis")));
+    }
+    @Test
+    void pagingAndSortingTest(){
+        System.out.println("findTop1ByName : " + userRepository.findTop2ByName("martin"));
+        System.out.println("findTopByNameOrderByIdDesc : " + userRepository.findTopByNameOrderByIdDesc("martin"));
+        System.out.println("findFirstByName : " + userRepository.findFirstByName("martin", Sort.by(Sort.Order.desc("id"))));
+        System.out.println("findByName : " + userRepository.findByName("martin", PageRequest.of(0,1,Sort.by(Sort.Order.desc("id")))).getContent());
+
+
+    }
+
+    //이거를 아예 Sort로 넘기면 된다.
+    private Sort getSort(){
+        return Sort.by(
+                Sort.Order.asc("id"),
+                Sort.Order.desc("email")
+        );
+    }
+
+    @Test
+    void enumTest(){
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        //유저가 없을 때 예외처리
+        user.setGender(Gender.MALE);
+        userRepository.save(user);
+        userRepository.findAll().forEach(System.out::println);
+
+        System.out.println(userRepository.findRawRecord().get("gender"));
+    }
+
+    @Test
+    void userHistoryTest(){
+        User user = new User();
+        user.setEmail("martin-new@fastcampus.com");
+        user.setName("martin-new");
+
+        userRepository.save(user);
+
+        user.setName(user.getName()+"-new");
+
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
+    }
 }

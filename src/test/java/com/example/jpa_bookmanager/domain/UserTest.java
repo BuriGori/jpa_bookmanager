@@ -13,12 +13,12 @@ class UserTest {
         User user = new User();
         user.setEmail("martin@fastcampus.com");
         user.setName("martin");
-        user.setCreateAt(LocalDateTime.now());
-        user.setUpdateAt(LocalDateTime.now());
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
 
         System.out.println(">>> "+ user.toString());
 
-        User user1 = new User( null ,"martin", "martin@slowcampus.com",LocalDateTime.now(), LocalDateTime.now());
+//        User user1 = new User( null ,"martin", "martin@slowcampus.com",LocalDateTime.now(), LocalDateTime.now());
 
         User user2 = User.builder()
                 .name("martin")

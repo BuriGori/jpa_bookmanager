@@ -16,14 +16,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 //@EntityListeners(value = AuditingEntityListener.class)
-public class Book extends BaseEntity implements Auditable {
+public class Book extends BaseEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private String  author;
 
+    private String category;
+
+    private Long authorId;
+
+    private Long publisherId;
+
+    @OneToOne(mappedBy = "book") // mappedBy를 쓰면 해당테이블에서는 연관키를 가지지 않게 된다.(연관관계의 주인을 정하는 절차)
+    @ToString.Exclude //일반적으로 ToString부분에서 순환참조가 되므로 StackOverFlow가 걸림, 그래서 ToString을 제외시키거나 단방향처리를 해줌
+    private BookReviewinfo bookReviewinfo;
+    //여기서 순환 참조란? => 현재 객체를 불러올때 Book의 bookReviewinfo의 book의 bookReviewinfo의.. 와 같이 연결이 되는 것을 뜻함.
 //    @CreatedDate
 //    private LocalDateTime createdAt;
 //

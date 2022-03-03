@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @ToString(callSuper = true)
@@ -50,7 +52,7 @@ public class User extends BaseEntity{
 
     //Listener -> @PrePersist, @PostUpdate, @PostLoad 등등이 있다.
 
-
-
-
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false) //엔티티가 어느 테이블로 조인되는지 확인하는 것 + readonly로 만들어주는 @
+    private List<UserHistory> userHistories = new ArrayList<>();
 }

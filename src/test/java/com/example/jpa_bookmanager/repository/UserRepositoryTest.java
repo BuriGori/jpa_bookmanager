@@ -2,6 +2,7 @@ package com.example.jpa_bookmanager.repository;
 
 import com.example.jpa_bookmanager.domain.Gender;
 import com.example.jpa_bookmanager.domain.User;
+import com.example.jpa_bookmanager.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.comparator.JSONCompareUtil;
@@ -77,9 +78,6 @@ class UserRepositoryTest {
     // deleteInBatch를 사용하면 or 연산을 통해서 하나의 delete문이 실행
     // Batch를 사용하면 확인 작업을 거치지 않고 바로 kill
 
-
-
-
     @Test
     void select(){
         System.out.println("findByName : " + userRepository.findByName("martin"));
@@ -132,5 +130,30 @@ class UserRepositoryTest {
         userRepository.save(user);
 
         userHistoryRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    void userRelationTest(){
+        User user = new User();
+        user.setName("david");
+        user.setEmail("davic@fastcampus.com");
+        user.setGender(Gender.MALE);
+        userRepository.save(user);
+
+        user.setName("daniel");
+        userRepository.save(user);
+
+        user.setEmail("danial@fastcampus.com");
+        userRepository.save(user);
+
+//        userHistoryRepository.findAll().forEach(System.out::println);
+
+//        List<UserHistory> result = userHistoryRepository.findByUserId(
+//                userRepository.findByemail("danial@fastcampus.com").getId());
+
+        List<UserHistory> result = userRepository.findByemail("danial@fastcampus.com")
+                .getUserHistories();
+
+        result.forEach(System.out::println);
     }
 }

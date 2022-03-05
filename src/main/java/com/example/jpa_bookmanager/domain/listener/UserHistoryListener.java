@@ -19,9 +19,9 @@ public class UserHistoryListener {
         User user = (User) o;
 
         UserHistory userHistory = new UserHistory();
-        userHistory.setUserId(user.getId());
         userHistory.setName(user.getName());
         userHistory.setEmail(userHistory.getEmail());
+        userHistory.setUser(user);
 
         userHistoryRepository.save(userHistory);
     }

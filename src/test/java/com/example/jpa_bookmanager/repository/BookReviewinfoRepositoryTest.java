@@ -46,7 +46,7 @@ class BookReviewinfoRepositoryTest {
         Book book = new Book();
         book.setName("JPA");
         book.setAuthorId(1L);
-        book.setPublisherId(1L);
+//        book.setPublisherId(1L);
 
         return bookRepository.save(book);
     }

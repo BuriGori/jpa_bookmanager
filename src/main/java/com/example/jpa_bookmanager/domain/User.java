@@ -54,5 +54,11 @@ public class User extends BaseEntity{
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", insertable = false, updatable = false) //엔티티가 어느 테이블로 조인되는지 확인하는 것 + readonly로 만들어주는 @
+    @ToString.Exclude
     private List<UserHistory> userHistories = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
 }

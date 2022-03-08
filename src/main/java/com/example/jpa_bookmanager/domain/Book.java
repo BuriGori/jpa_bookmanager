@@ -1,6 +1,7 @@
 package com.example.jpa_bookmanager.domain;
 
 import com.example.jpa_bookmanager.domain.listener.Auditable;
+import jdk.jfr.Timespan;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,6 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -45,6 +48,15 @@ public class Book extends BaseEntity{
     @ToString.Exclude
     private Publisher publisher;
 
+//    @ManyToMany
+    @OneToMany
+    @JoinColumn(name = "book_id")
+    @ToString.Exclude
+    private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
+
+    public void addBookAndAuthors (BookAndAuthor... bookAndAuthors){
+        Collections.addAll(this.bookAndAuthors,bookAndAuthors);
+    }
 //    @CreatedDate
 //    private LocalDateTime createdAt;
 //

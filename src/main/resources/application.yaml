@@ -9,7 +9,16 @@ spring:
         format_sql: true
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
+    generate-ddl: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/book_manager
+    username: root
+    password: brgr4684
+  sql:
+    init:
+      mode: always
 
 server:
   port: 8070

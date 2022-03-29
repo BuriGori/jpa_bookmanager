@@ -35,10 +35,19 @@ public class EntityMangerTest {
         User user = userRepository.findById(1L).get();
         user.setName("marrrrrrrrrrr");
         userRepository.save(user);
+//        userRepository.flush();
         System.out.println("---------------");
 
         user.setEmail("marrrrr@fast.com");
         userRepository.save(user);
+//        userRepository.flush();
+        System.out.println("-------------");
+
+//        System.out.println(">>>> 1 :" + userRepository.findById(1L).get());
+//        userRepository.flush();
+//        System.out.println(">>>> 2 :" + userRepository.findById(1L).get());
+//
+        System.out.println(userRepository.findAll());
     }
 
 }

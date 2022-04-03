@@ -3,6 +3,7 @@ package com.example.jpa_bookmanager.domain;
 import com.example.jpa_bookmanager.domain.listener.Auditable;
 import jdk.jfr.Timespan;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -20,6 +21,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+//@DynamicUpdate
 //@EntityListeners(value = AuditingEntityListener.class)
 public class Book extends BaseEntity{
     @Id

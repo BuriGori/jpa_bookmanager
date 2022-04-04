@@ -118,6 +118,5 @@ public class BookService {
 
         // Transactional의 클래스 스콥, 메소드 스콥이 나눠진 것을 확인해야한다.!
 
-
     }
 }

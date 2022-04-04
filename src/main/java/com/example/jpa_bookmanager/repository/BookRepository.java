@@ -6,9 +6,19 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public interface BookRepository extends JpaRepository<Book,Long> {
     @Modifying
     @Query(value = "update book set category='none'",nativeQuery = true)
     void update();
+
+    List<Book> findByCategoryIsNull();
+
+    List<Book> findAllByDeletedFalse();
+
+    List<Book> findByCategoryIsNullAndDeletedFalse();
+
+
 }

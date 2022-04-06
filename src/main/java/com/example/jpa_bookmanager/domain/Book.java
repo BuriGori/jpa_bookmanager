@@ -4,6 +4,7 @@ import com.example.jpa_bookmanager.domain.listener.Auditable;
 import jdk.jfr.Timespan;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,6 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 //@DynamicUpdate
 //@EntityListeners(value = AuditingEntityListener.class)
+@Where(clause = "deleted = false")
 public class Book extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +48,7 @@ public class Book extends BaseEntity{
     @ToString.Exclude
     private List<Review> reviews = new ArrayList<>();
 
-    @ManyToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST , CascadeType.MERGE, CascadeType.REMOVE})
     @ToString.Exclude
     private Publisher publisher;
 
@@ -55,6 +57,8 @@ public class Book extends BaseEntity{
     @JoinColumn(name = "book_id")
     @ToString.Exclude
     private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
+
+    private boolean deleted=false;
 
     public void addBookAndAuthors (BookAndAuthor... bookAndAuthors){
         Collections.addAll(this.bookAndAuthors,bookAndAuthors);
